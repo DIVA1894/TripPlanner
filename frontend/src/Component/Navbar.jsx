@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     () => !!localStorage.getItem("authToken")
@@ -12,7 +11,6 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
   useEffect(() => {
     const handleStorageChange = () => {
       const token = localStorage.getItem("authToken");
