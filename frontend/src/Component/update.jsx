@@ -13,7 +13,7 @@ function Update() {
     e.preventDefault();
     try {
       await axios.put(
-        `https://tripplanner-1.onrender.com/userUpdate/${email}`,
+        `https://tripplanner-2ccq.onrender.com/userUpdate/${email}`,
         {
           name,
           mobile,

@@ -19,7 +19,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://tripplanner-2ccq.onrender.com/api/auth/login",
         formData
       );
       if (res.data?.token && res.data?.name) {

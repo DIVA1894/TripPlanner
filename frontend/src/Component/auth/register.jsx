@@ -59,7 +59,7 @@ const Register = () => {
 
     try {
       const res = await axios.post(
-        "https://tripplanner-1.onrender.com/api/auth/register",
+        "https://tripplanner-2ccq.onrender.com/api/auth/register",
         formData
       );
       alert(res.data.message);

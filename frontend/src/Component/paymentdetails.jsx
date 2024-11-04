@@ -12,7 +12,7 @@ function PaymentDetails() {
     const fetchPayments = async () => {
       try {
         const response = await axios.get(
-          "https://tripplanner-1.onrender.com/payment"
+          "https://tripplanner-2ccq.onrender.com/payment"
         );
         setPayments(response.data);
       } catch (error) {

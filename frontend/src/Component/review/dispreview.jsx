@@ -10,7 +10,7 @@ const ReviewList = () => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          `https://tripplanner-1.onrender.com/api/reviews`
+          `https://tripplanner-2ccq.onrender.com/api/reviews`
         );
         console.log(response.data);
 

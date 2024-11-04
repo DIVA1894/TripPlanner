@@ -53,7 +53,7 @@ const Navbar = () => {
 
     try {
       const response = await axios.get(
-        `https://tripplanner-1.onrender.com/api/places?query=${value}`
+        `https://tripplanner-2ccq.onrender.com/api/places?query=${value}`
       );
       setSearchResults(response.data || []);
     } catch (error) {

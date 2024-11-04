@@ -29,7 +29,7 @@ const ReviewForm = ({ placeId, userId, onClose }) => {
 
     try {
       const response = await axios.post(
-        "https://tripplanner-1.onrender.com/api/reviews",
+        "https://tripplanner-2ccq.onrender.com/api/reviews",
         {
           userId,
           placeId,

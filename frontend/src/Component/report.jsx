@@ -13,7 +13,7 @@ function CustomerDetails() {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          "https://tripplanner-1.onrender.com/userdata"
+          "https://tripplanner-2ccq.onrender.com/userdata"
         );
         setUsers(response.data);
       } catch (error) {
@@ -39,7 +39,7 @@ function CustomerDetails() {
   async function handleDelete(email) {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`https://tripplanner-1.onrender.com/userDelete/${email}`);
+        await axios.delete(`https://tripplanner-2ccq.onrender.com/userDelete/${email}`);
         setUsers(users.filter((user) => user.email !== email));
       } catch (error) {
         setError("Error deleting user: " + error.message);

@@ -12,7 +12,7 @@ function PackageDetails() {
     const fetchPackages = async () => {
       try {
         const response = await axios.get(
-          "https://tripplanner-1.onrender.com/packages"
+          "https://tripplanner-2ccq.onrender.com/packages"
         );
         setPackages(response.data);
       } catch (error) {
