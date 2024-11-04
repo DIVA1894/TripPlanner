@@ -1,5 +1,4 @@
 import React from "react";
-
 function About() {
   return (
     <div className="container mx-auto px-4 py-10 bg-gray-50 shadow-lg rounded-lg mt-8">

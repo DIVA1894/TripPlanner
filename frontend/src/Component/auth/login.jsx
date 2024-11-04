@@ -18,8 +18,10 @@ const Login = () => {
     setError(null);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", formData);
-      
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        formData
+      );
       if (res.data?.token && res.data?.name) {
         localStorage.setItem("authToken", res.data.token);
         localStorage.setItem("name", res.data.name);

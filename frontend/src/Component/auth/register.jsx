@@ -24,16 +24,21 @@ const Register = () => {
     if (!formData.name) newErrors.name = "Name is required";
     if (!formData.email) {
       newErrors.email = "Email is required";
-    } else if (!/^[\w.%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
+    } else if (
+      !/^[\w.%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(formData.email)
+    ) {
       newErrors.email = "Invalid email format";
     }
 
     if (!formData.password) {
       newErrors.password = "Password is required";
     } else if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(formData.password)
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+        formData.password
+      )
     ) {
-      newErrors.password = "Password must be at least 8 characters, including 1 uppercase, 1 lowercase, 1 digit, and 1 special character";
+      newErrors.password =
+        "Password must be at least 8 characters, including 1 uppercase, 1 lowercase, 1 digit, and 1 special character";
     }
 
     if (!formData.mobile) {
@@ -53,7 +58,10 @@ const Register = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", formData);
+      const res = await axios.post(
+        "https://tripplanner-1.onrender.com/api/auth/register",
+        formData
+      );
       alert(res.data.message);
       navigate("/login");
     } catch (err) {
@@ -78,9 +86,13 @@ const Register = () => {
               placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
               onChange={handleChange}
               required
-              className={`w-full p-2 border ${errors[key] ? "border-red-500" : "border-gray-300"} rounded focus:outline-none focus:ring focus:ring-blue-400`}
+              className={`w-full p-2 border ${
+                errors[key] ? "border-red-500" : "border-gray-300"
+              } rounded focus:outline-none focus:ring focus:ring-blue-400`}
             />
-            {errors[key] && <p className="text-red-500 text-sm">{errors[key]}</p>}
+            {errors[key] && (
+              <p className="text-red-500 text-sm">{errors[key]}</p>
+            )}
           </div>
         ))}
 

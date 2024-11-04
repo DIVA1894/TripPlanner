@@ -5,7 +5,10 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     () => !!localStorage.getItem("authToken")
   );
+
+  const [email, setEmail] = useState(localStorage.getItem("email") || "");
   const [username, setUsername] = useState(localStorage.getItem("name") || "");
+
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -15,6 +18,8 @@ const Navbar = () => {
     const handleStorageChange = () => {
       const token = localStorage.getItem("authToken");
       setIsLoggedIn(!!token);
+      setUsername(localStorage.getItem("username") || "");
+      setEmail(localStorage.getItem("email") || "");
       setUsername(localStorage.getItem("name") || "");
     };
 
@@ -27,9 +32,12 @@ const Navbar = () => {
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       localStorage.removeItem("authToken");
+      localStorage.removeItem("username");
+      localStorage.removeItem("email");
       localStorage.removeItem("name");
       setIsLoggedIn(false);
       setUsername("");
+      setEmail("");
       navigate("/");
     }
   };
@@ -45,7 +53,7 @@ const Navbar = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/places?query=${value}`
+        `https://tripplanner-1.onrender.com/api/places?query=${value}`
       );
       setSearchResults(response.data || []);
     } catch (error) {
@@ -53,10 +61,6 @@ const Navbar = () => {
       setSearchResults([]);
     }
   };
-
-  const filteredResults = searchResults.filter((place) =>
-    place?.name.toLowerCase().startsWith(searchQuery.toLowerCase())
-  );
 
   const handlePlaceSelect = (place) => {
     setSearchQuery(place.name);
@@ -76,7 +80,14 @@ const Navbar = () => {
   return (
     <div>
       <nav className="flex justify-between py-3 content-center bg-slate-50 drop-shadow w-full">
-        <h1 className="ml-20 text-3xl font-bold">Travigo</h1>
+        <div className="flex items-center">
+          <img
+            src="https://img.freepik.com/free-vector/detailed-travel-logo_23-2148616611.jpg"
+            alt=""
+            className="h-14 w-14 rounded-full ml-16"
+          />
+          <h1 className="ml-4 text-3xl font-bold">Travigo</h1>
+        </div>
         <div className="flex items-center">
           <ul className="flex gap-5 font-medium mt-3">
             <li>
@@ -118,30 +129,33 @@ const Navbar = () => {
             {isLoggedIn ? (
               <>
                 <h5>{username}</h5>
-              <li className="relative">
-                <button
-                  onClick={toggleDropdown}
-                  className="flex items-center justify-center w-4 h-4 rounded-full bg-green-500 mt-2"
-                  title="Account options"
-                ></button>
-                {showDropdown && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
-                    <Link
-                      to="/api/booked"
-                      className="block px-4 py-2 hover:bg-gray-100"
-                      onClick={() => setShowDropdown(false)}
-                    >
-                      Your Profile
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </li>
+                <li className="relative">
+                  <button
+                    onClick={toggleDropdown}
+                    className="flex items-center justify-center w-4 h-4 rounded-full bg-green-500 mt-2"
+                    title="Account options"
+                  ></button>
+                  {showDropdown && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
+                      <div className="block px-4 py-2 text-gray-600">
+                        {email} {/* Display email here */}
+                      </div>
+                      <Link
+                        to="/api/booked"
+                        className="block px-4 py-2 hover:bg-gray-100"
+                        onClick={() => setShowDropdown(false)}
+                      >
+                        Your Profile
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </li>
               </>
             ) : (
               <>
@@ -163,10 +177,10 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {filteredResults.length > 0 && (
+      {searchResults.length > 0 && (
         <div className="bg-white shadow-md mt-2 rounded-md">
           <ul>
-            {filteredResults.map((place) => (
+            {searchResults.map((place) => (
               <li
                 key={place?._id}
                 className="p-2 border-b hover:bg-gray-100 cursor-pointer"

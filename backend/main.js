@@ -22,6 +22,7 @@ import {
   updatePackage,
   paymentDetails,
   packageDetails,
+  loginEmail,
 } from './controller/control.js';
 
 const app = express();
@@ -32,10 +33,14 @@ dbconnect();
 
 // Middleware setup
 app.use(cors({
-  origin: "http://localhost:5173", 
+  origin: [
+    "https://travellplanner.netlify.app", 
+    "http://localhost:5173"                 
+  ],
   methods: ["GET", "POST", "DELETE", "PUT"],
   credentials: true,
 }));
+
 
 app.use(express.json()); // For parsing application/json
 app.use(bodyParser.json()); // For parsing application/json (optional if using express.json)
@@ -44,7 +49,8 @@ app.use(bodyParser.json()); // For parsing application/json (optional if using e
 app.post("/api/auth/register", registerUser);
 app.post("/api/auth/login", loginUser);
 app.post("/customer", coustmer_details); 
-app.get("/userdata", userData);          
+app.get("/userdata", userData);
+app.get("/api/user",loginEmail);          
 app.delete("/userDelete/:email", userDelete); 
 app.put("/userUpdate/:email", updateData);    
 

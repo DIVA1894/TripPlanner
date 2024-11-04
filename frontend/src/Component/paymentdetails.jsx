@@ -11,7 +11,9 @@ function PaymentDetails() {
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/payment");
+        const response = await axios.get(
+          "https://tripplanner-1.onrender.com/payment"
+        );
         setPayments(response.data);
       } catch (error) {
         setError("Failed to fetch payment data");

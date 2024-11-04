@@ -1,9 +1,9 @@
 import user from "../model/coustmermodel.js";
 import User from "../model/loginmodel.js";
 import Place from "../model/placeModel.js"; 
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken"; 
-import Package from "../model/packagemodel.js";
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import Package from "../model/packagesModel.js";
 import Review from "../model/reviewmodel.js";
 import mongoose from "mongoose";
 import PayModel from '../model/payModel.js';
@@ -16,14 +16,22 @@ const registerUser = async (req, res) => {
   try {
     const { name, email, password, mobile } = req.body;
 
+    // Check for required fields
+    if (!name || !email || !password || !mobile) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
+    // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // Create a new user
     const newUser = new User({
       name,
       email,
@@ -31,39 +39,81 @@ const registerUser = async (req, res) => {
       mobile,
     });
 
+    // Save the new user
     await newUser.save();
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
+    console.error('Error registering user:', error);
     res.status(500).json({ message: "Server Error: " + error.message });
   }
 };
 
-// User login
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Get token from the header
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized: Token is missing." });
+  }
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ message: "Unauthorized: Invalid token." });
+
+    req.user = user; // Save user information from token to request
+    next(); // Call next middleware or route handler
+  });
+};
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Check for required fields
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password are required" });
     }
 
-    const user = await User.findOne({ email }); 
+    // Find the user by email
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
+    // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
     const name = user.name;
 
+    // Generate a token
     const token = jwt.sign({ userId: user._id }, "your_jwt_secret", { expiresIn: "1h" });
     res.json({ message: "Login successful", token, name });
   } catch (error) {
+    console.error('Error logging in user:', error);
     res.status(500).json({ message: "Server Error: " + error.message });
   }
 };
+
+const loginEmail = async (req, res) => {
+  try {
+    // Check if req.user exists and has the id property
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ message: 'Unauthorized: User ID is missing.' });
+    }
+
+    const user = await User.findById(req.user._id).select('email'); // Only select the email field
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' }); // Not found
+    }
+
+    res.status(200).json({ email: user.email }); // Success
+  } catch (error) {
+    console.error('Error fetching user email:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+
 
 const coustmer_details = async (req, res) => {
   try {
@@ -445,4 +495,5 @@ export {
   createUser,
   paymentDetails,
   packageDetails,
+  loginEmail,
 };

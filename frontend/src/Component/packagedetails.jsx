@@ -11,7 +11,9 @@ function PackageDetails() {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/packages");
+        const response = await axios.get(
+          "https://tripplanner-1.onrender.com/packages"
+        );
         setPackages(response.data);
       } catch (error) {
         setError("Failed to fetch package data");

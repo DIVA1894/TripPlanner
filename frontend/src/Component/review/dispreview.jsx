@@ -9,7 +9,9 @@ const ReviewList = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/reviews`);
+        const response = await axios.get(
+          `https://tripplanner-1.onrender.com/api/reviews`
+        );
         console.log(response.data);
 
         // Ensure response contains an array of reviews

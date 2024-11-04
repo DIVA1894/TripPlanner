@@ -24,7 +24,7 @@ const Package = () => {
     const fetchPackages = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/packages?place=${id}` // Fetch packages using id as the place
+          `https://tripplanner-1.onrender.com/api/packages?place=${id}` // Fetch packages using id as the place
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

@@ -5,7 +5,10 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: 'dist', // this matches the path in server.js
+    rollupOptions: {
+      external: [], // Remove "react-icons/fa" here
+    },
+    outDir: 'dist',
     sourcemap: true,
   },
   server: {

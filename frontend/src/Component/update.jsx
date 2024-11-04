@@ -12,10 +12,13 @@ function Update() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/userUpdate/${email}`, {
-        name,
-        mobile,
-      });
+      await axios.put(
+        `https://tripplanner-1.onrender.com/userUpdate/${email}`,
+        {
+          name,
+          mobile,
+        }
+      );
       console.log("Update data sent from UI");
     } catch (error) {
       console.log(error);

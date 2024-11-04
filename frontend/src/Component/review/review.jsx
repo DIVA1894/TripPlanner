@@ -28,12 +28,15 @@ const ReviewForm = ({ placeId, userId, onClose }) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/reviews", {
-        userId,
-        placeId,
-        rating: parseInt(rating, 10),
-        comment,
-      });
+      const response = await axios.post(
+        "https://tripplanner-1.onrender.com/api/reviews",
+        {
+          userId,
+          placeId,
+          rating: parseInt(rating, 10),
+          comment,
+        }
+      );
       console.log("Review added:", response.data);
       setMessage("Review submitted successfully!");
 
