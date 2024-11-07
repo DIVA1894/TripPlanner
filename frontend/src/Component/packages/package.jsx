@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
 const placeImages = {
-  ooty: "https://tempotravellerrentindelhi.wordpress.com/wp-content/uploads/2020/08/1585825644_ooty.jpg", // Replace with the actual Ooty image URL
+  ooty: "https://tempotravellerrentindelhi.wordpress.com/wp-content/uploads/2020/08/1585825644_ooty.jpg",
   coimbatore:
-    "https://www.purvaland.com/wp-content/uploads/2024/07/Coimbatore1920X704px-1-scaled.webp", // Replace with the actual Coimbatore image URL
-  dindigul: "https://wikitravel.org/upload/shared//5/5b/Dindigul_Banner.jpg", // Replace with the actual Dindigul image URL
+    "https://www.purvaland.com/wp-content/uploads/2024/07/Coimbatore1920X704px-1-scaled.webp",
+  dindigul: "https://wikitravel.org/upload/shared//5/5b/Dindigul_Banner.jpg",
   kodaikanal:
     "https://www.clubmahindra.com/blog/media/section_images/banner1920-5c13a545b62beb9.webp",
   madurai:
-    "https://upload.wikimedia.org/wikipedia/commons/0/04/Dawn_Madurai.jpg", // Replace with the actual Madurai image URL
+    "https://upload.wikimedia.org/wikipedia/commons/0/04/Dawn_Madurai.jpg",
   tirunelveli:
     "https://jumborealty.co.in/wp-content/uploads/2023/12/thirunelveli-town.jpg",
 };
@@ -24,13 +24,13 @@ const Package = () => {
     const fetchPackages = async () => {
       try {
         const response = await fetch(
-          `https://tripplanner-2ccq.onrender.com/api/packages?place=${id}` // Fetch packages using id as the place
+          `https://tripplanner-2ccq.onrender.com/api/packages?place=${id}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setPackages(data); // Assuming API returns an array of packages
+        setPackages(data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -39,7 +39,7 @@ const Package = () => {
     };
 
     fetchPackages();
-  }, [id]); // The effect runs when the place (id) changes
+  }, [id]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error fetching packages: {error}</div>;
@@ -50,7 +50,6 @@ const Package = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Packages in {id}</h1>
 
-      {/* Display the specific image for the place */}
       {placeImages[id.toLowerCase()] && (
         <img
           src={placeImages[id.toLowerCase()]}
@@ -59,22 +58,17 @@ const Package = () => {
         />
       )}
 
-      <div className="flex flex-wrap justify-start">
-        {" "}
-        {/* Flex container for horizontal layout */}
+      <div className="flex flex-wrap -mx-2">
         {packages.map((packageData, index) => {
           const { title, price, duration, imageUrl, features } = packageData;
           return (
-            <div key={index} className="mb-8 w-1/3 p-2">
-              {" "}
-              {/* Flex item */}
+            <div
+              key={index}
+              className="w-full sm:w-1/2 lg:w-1/3 p-2"
+            >
               <div className="border rounded-lg p-4 bg-white shadow-md">
-                {" "}
-                {/* Package card */}
                 <h2 className="text-xl font-semibold">{title}</h2>
-                <h3 className="text-lg">
-                  ₹{price} per person ({duration})
-                </h3>
+                <h3 className="text-lg">₹{price} per person ({duration})</h3>
                 <img
                   src={imageUrl}
                   alt={title}

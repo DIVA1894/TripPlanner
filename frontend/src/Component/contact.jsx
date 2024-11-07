@@ -23,15 +23,17 @@ function Contact() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <h1 className="text-4xl font-bold text-blue-900 mb-6">Contact Us</h1>
-      <p className="text-lg text-gray-700 mb-4">
+    <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
+      <h1 className="text-3xl sm:text-4xl font-bold text-blue-900 mb-6 text-center">
+        Contact Us
+      </h1>
+      <p className="text-base sm:text-lg text-gray-700 mb-4 text-center">
         Have questions or need assistance? Our team is here to help! Please fill
         out the form below, and we’ll get back to you as soon as possible.
       </p>
       <form
         onSubmit={handleSubmit}
-        className="bg-blue-50 p-8 rounded-lg shadow-md"
+        className="bg-blue-50 p-6 sm:p-8 rounded-lg shadow-md max-w-lg mx-auto"
       >
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
@@ -76,7 +78,7 @@ function Contact() {
         </div>
         <button
           type="submit"
-          className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+          className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 w-full sm:w-auto"
         >
           Send Message
         </button>

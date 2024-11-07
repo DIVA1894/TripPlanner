@@ -10,13 +10,12 @@ export default function Home() {
             It's,a Big World Out There,Go Explore🚀
           </h1>
           <p className="max-w-xl">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, quod
-            error perspiciatis sit cupiditate impedit.
+            Life’s short, the world is vast – let’s make every trip unforgettable.
           </p>
         </div>
         <div>
           <img
-            className="max-w-md ml-30"
+            className="max-w-md ml-40"
             src="https://img.freepik.com/premium-vector/travel_23-2148034719.jpg?semt=ais_hybrid"
             alt=""
           />

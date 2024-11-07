@@ -3,19 +3,20 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-8">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+        
         {/* Logo Section */}
-        <div className="flex items-center mb-4 md:mb-0">
+        <div className="flex flex-col md:flex-row items-center text-center md:text-left">
           <img
-            className="w-16 h-16 mr-4 rounded-full"
-            src="https://img.freepik.com/free-vector/detailed-travel-logo_23-2148616611.jpg" // Placeholder logo image
+            className="w-16 h-16 mr-0 md:mr-4 rounded-full"
+            src="https://img.freepik.com/free-vector/detailed-travel-logo_23-2148616611.jpg"
             alt="Logo"
           />
-          <h1 className="text-2xl font-bold">TRAVIGO</h1>
+          <h1 className="text-2xl font-bold mt-2 md:mt-0">TRAVIGO</h1>
         </div>
 
         {/* Quick Links */}
-        <div className="flex flex-col md:flex-row md:space-x-8 mb-4 md:mb-0">
+        <div className="flex flex-col md:flex-row md:space-x-8 items-center text-center space-y-4 md:space-y-0">
           <a href="#" className="hover:text-gray-400">
             Home
           </a>
@@ -31,7 +32,7 @@ const Footer = () => {
         </div>
 
         {/* Social Media Links */}
-        <div className="flex space-x-4 mb-4 md:mb-0">
+        <div className="flex space-x-4 justify-center">
           <a href="#" aria-label="Twitter">
             <img
               className="w-8 h-8"
@@ -49,7 +50,7 @@ const Footer = () => {
           <a href="#" aria-label="Instagram">
             <img
               className="w-8 h-8"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHP2W0X8Bj9Wwou8Y5Iv2q_Aa-nME9SMwEAA&s" // Placeholder for Instagram icon
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHP2W0X8Bj9Wwou8Y5Iv2q_Aa-nME9SMwEAA&s"
               alt="Instagram"
             />
           </a>

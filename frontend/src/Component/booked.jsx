@@ -12,7 +12,10 @@ const BookedPackagesContainer = ({ onReviewSubmit }) => {
   const fetchBookedPackages = async () => {
     try {
       const name = localStorage.getItem("name");
-      console.log(name);
+      if (!name) {
+        console.error("User name is not found. Redirecting to login.");
+        return;
+      }
       const response = await axios.get(
         `https://tripplanner-2ccq.onrender.com/api/booked/${name}`
       );
@@ -40,8 +43,8 @@ const BookedPackagesContainer = ({ onReviewSubmit }) => {
   };
 
   const handleReviewSubmit = (placeId) => {
-    onReviewSubmit(placeId); // Call the parent's callback with the placeId
-    closeModal(); // Close the modal
+    onReviewSubmit(placeId);
+    closeModal();
   };
 
   if (loading) {
@@ -53,28 +56,24 @@ const BookedPackagesContainer = ({ onReviewSubmit }) => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-6">Booked Packages</h1>
       {bookedPackages.length === 0 ? (
         <p className="text-center text-gray-600">No booked packages found.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-2 gap-8">
           {bookedPackages.map((pkg, index) => (
             <div
               key={pkg.customer._id || `package-${index}`}
-              className="border rounded-lg shadow-lg p-4 bg-white"
+              className="border rounded-lg shadow-lg p-6 bg-white transform transition-all duration-300 hover:scale-105"
             >
-              <h2 className="text-xl font-semibold">
-                {pkg.packageDetails.title}
-              </h2>
+              <h2 className="text-xl font-semibold">{pkg.packageDetails.title}</h2>
               <img
                 src={pkg.packageDetails.imageUrl}
                 alt={pkg.packageDetails.title}
-                className="mt-4 rounded-lg h-48 w-full object-cover"
+                className="mt-4 rounded-lg w-full h-56 object-cover"
               />
-              <p className="text-gray-700 mt-2">
-                {pkg.packageDetails.description}
-              </p>
+              <p className="text-gray-700 mt-2">{pkg.packageDetails.description}</p>
               <p className="mt-2">
                 <strong>Location:</strong> {pkg.packageDetails.place}
               </p>
@@ -96,7 +95,7 @@ const BookedPackagesContainer = ({ onReviewSubmit }) => {
               {/* Review Button */}
               <button
                 onClick={() => handleReviewClick(pkg)}
-                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 w-full sm:w-auto"
               >
                 Leave a Review
               </button>

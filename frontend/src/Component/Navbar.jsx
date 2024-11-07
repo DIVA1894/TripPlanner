@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     () => !!localStorage.getItem("authToken")
   );
-
   const [email, setEmail] = useState(localStorage.getItem("email") || "");
   const [username, setUsername] = useState(localStorage.getItem("name") || "");
-
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
   useEffect(() => {
     const handleStorageChange = () => {
       const token = localStorage.getItem("authToken");
@@ -77,6 +77,31 @@ const Navbar = () => {
 
   const toggleDropdown = () => setShowDropdown((prev) => !prev);
 
+  // Voice search handler
+  const handleSpeechSearch = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;  
+    const allowedLocations = ["Coimbatore", "Ooty", "Kodaikanal", "Dindigul", "Tirunelveli", "Madurai"];
+    const recognition = new SpeechRecognition();
+  
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      const detectedLocation = allowedLocations.find((location) =>
+        transcript.toLowerCase().includes(location.toLowerCase())
+      );
+  
+      if (detectedLocation) {
+        setSearchQuery(detectedLocation);
+        handlePlaceSelect({ name: detectedLocation }); // Selects the place based on detected location
+      } else {
+        setSearchQuery(transcript);
+        handleSearchChange({ target: { value: transcript } }); // Regular search if location not recognized
+      }
+    };
+  
+    recognition.start();
+  };
+  
+
   return (
     <div>
       <nav className="flex justify-between py-3 content-center bg-slate-50 drop-shadow w-full">
@@ -120,6 +145,14 @@ const Navbar = () => {
               >
                 Search
               </button>
+              <button
+            type="button"
+            onClick={handleSpeechSearch}
+            className="ml-2 p-2"
+            title="Voice Search"
+          >
+            <span className="material-symbols-outlined">mic</span>
+          </button>
             </>
           )}
         </div>

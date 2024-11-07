@@ -13,7 +13,7 @@ function Form() {
   const [features, setFeatures] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
   const [amount, setAmount] = useState(0);
-  const [count, setCount] = useState(1); // Initialize count with 1
+  const [count, setCount] = useState(1);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -69,7 +69,7 @@ function Form() {
       amount,
     };
 
-    console.log("Sending customer data:", customerData); // Log the data being sent
+    console.log("Sending customer data:", customerData);
 
     try {
       const response = await axios.post(
@@ -77,7 +77,7 @@ function Form() {
         customerData
       );
       toast.success(`Thanks for Booking ${customerData.name}`);
-      console.log(response); // Clear form fields
+      console.log(response);
 
       setMobile("");
       setEmail("");
@@ -130,104 +130,69 @@ function Form() {
   };
 
   return (
-    <div className="flex">
-           {" "}
-      <div className="md:w-1/2 bg-blue-50 rounded-lg shadow-md p-4 mt-5 mb-[500px] ml-32">
-               {" "}
+    <div className="flex flex-col lg:flex-row lg:space-x-8 px-4 py-8">
+      {/* Package Details Section */}
+      <div className="bg-blue-50 rounded-lg shadow-md p-6 flex-1">
         <h2 className="text-2xl font-bold mb-4 text-center text-blue-900">
-                    Package Details        {" "}
+          Package Details
         </h2>
-               {" "}
         <div className="mb-2">
-                   {" "}
           <label className="block text-gray-700 font-semibold mb-2">
-                        Package Title          {" "}
+            Package Title
           </label>
-                   {" "}
           <div className="p-2 rounded-lg w-full">
-                       {" "}
-            <h3 className="text-lg font-bold text-blue-700">{packageTitle}</h3> 
-                   {" "}
+            <h3 className="text-lg font-bold text-blue-700">{packageTitle}</h3>
           </div>
-                 {" "}
         </div>
-               {" "}
         <div className="mb-2">
-                   {" "}
           <label className="block text-gray-700 font-semibold mb-2">
-                        Price per Unit          {" "}
+            Price per Unit
           </label>
-                   {" "}
           <div className="p-2 rounded-lg w-full">
-                       {" "}
-            <p className="text-lg font-bold text-blue-700">{`₹ ${price}`}</p>   
-                 {" "}
+            <p className="text-lg font-bold text-blue-700">{`₹ ${price}`}</p>
           </div>
-                 {" "}
         </div>
-               {" "}
         <div className="mb-2">
-                   {" "}
           <label className="block text-gray-700 font-semibold mb-2">
-                        Duration          {" "}
+            Duration
           </label>
-                   {" "}
           <div className="p-2 rounded-lg w-full">
-                       {" "}
-            <p className="text-lg font-bold text-blue-700">{duration}</p>       
-             {" "}
+            <p className="text-lg font-bold text-blue-700">{duration}</p>
           </div>
-                 {" "}
         </div>
-               {" "}
         <div className="mb-2">
-                   {" "}
           <label className="block text-gray-700 font-semibold mb-2">
-                        Features          {" "}
+            Features
           </label>
-                   {" "}
           <ul className="list-disc list-inside p-2 rounded-lg w-full">
-                       {" "}
             {features.length > 0 ? (
               features.map((feature, index) => (
                 <li key={index} className="text-gray-700">
-                                    {feature}               {" "}
+                  {feature}
                 </li>
               ))
             ) : (
               <li className="text-gray-700">No features available.</li>
             )}
-                     {" "}
           </ul>
-                 {" "}
         </div>
-               {" "}
         <div className="mb-4">
-                   {" "}
           <img
             src={imageUrl}
             alt={packageTitle}
             className="w-full h-32 object-cover rounded-lg my-2 shadow-lg"
           />
-                 {" "}
         </div>
-             {" "}
       </div>
-           {" "}
-      <div className="md:w-96 p-4 min-h-[200px] mt-16 mb-[90vh] ml-20 mr-16 bg-gradient-to-br from-blue-200 to-blue-500 shadow-2xl rounded-lg">
-               {" "}
+
+      {/* Booking Form Section */}
+      <div className="bg-gradient-to-br from-blue-200 to-blue-500 shadow-2xl rounded-lg p-6 flex-1 mt-8 lg:mt-0">
         <h2 className="text-2xl font-bold mb-4 text-center text-blue-900">
-                    Booking Form        {" "}
+          Booking Form
         </h2>
-               {" "}
         <form onSubmit={(e) => e.preventDefault()}>
-                   {" "}
-          <div className="mb-2">
-                       {" "}
-            <label className="block text-gray-700 font-bold mb-2">
-              Mobile Number
-            </label>
-                       {" "}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2">Mobile</label>
             <input
               type="tel"
               className="border-2 border-gray-400 p-2 rounded-lg w-full focus:outline-none focus:border-blue-500 hover:border-gray-600 transition duration-300"
@@ -236,13 +201,9 @@ function Form() {
               onChange={(e) => setMobile(e.target.value)}
               required
             />
-                     {" "}
           </div>
-                   {" "}
-          <div className="mb-2">
-                       {" "}
+          <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">Email</label>
-                       {" "}
             <input
               type="email"
               className="border-2 border-gray-400 p-2 rounded-lg w-full focus:outline-none focus:border-blue-500 hover:border-gray-600 transition duration-300 lowercase"
@@ -251,13 +212,9 @@ function Form() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-                     {" "}
           </div>
-                   {" "}
-          <div className="mb-2">
-                       {" "}
+          <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">Count</label>
-                       {" "}
             <input
               type="number"
               className="border-2 border-gray-400 p-2 rounded-lg w-full focus:outline-none focus:border-blue-500 hover:border-gray-600 transition duration-300"
@@ -266,15 +223,9 @@ function Form() {
               onChange={(e) => setCount(e.target.value)}
               required
             />
-                     {" "}
           </div>
-                   {" "}
           <div className="mb-4">
-                       {" "}
-            <label className="block text-gray-700 font-bold mb-2">
-              Total Amount
-            </label>
-                       {" "}
+            <label className="block text-gray-700 font-bold mb-2">Total Amount</label>
             <input
               type="text"
               className="border-2 border-gray-400 p-2 rounded-lg w-full focus:outline-none focus:border-blue-500 hover:border-gray-600 transition duration-300"
@@ -282,21 +233,16 @@ function Form() {
               value={`₹ ${amount}`}
               readOnly
             />
-                     {" "}
           </div>
-                   {" "}
           <button
             type="button"
             className="bg-blue-700 text-white font-bold p-2 rounded-lg w-full hover:bg-blue-800 transition duration-300"
             onClick={handlePayment}
           >
-                        Proceed to Payment          {" "}
+            Pay Now
           </button>
-                 {" "}
         </form>
-             {" "}
       </div>
-            <ToastContainer />   {" "}
     </div>
   );
 }

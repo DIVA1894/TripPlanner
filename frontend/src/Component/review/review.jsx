@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
 
-const ReviewForm = ({ placeId, userId, onClose }) => {
+const ReviewForm = ({ placeId, userId, onClose, onReviewSubmit }) => {
   const [rating, setRating] = useState(1);
   const [hover, setHover] = useState(null);
   const [comment, setComment] = useState("");
@@ -13,18 +13,10 @@ const ReviewForm = ({ placeId, userId, onClose }) => {
     e.preventDefault();
     setLoading(true);
 
-    // Log the values being sent
-    console.log({
-      userId,
-      placeId,
-      rating,
-      comment,
-    });
-
     if (!userId || !placeId || !rating || !comment.trim()) {
       setMessage("All fields are required.");
       setLoading(false);
-      return; // Prevent submission
+      return;
     }
 
     try {
@@ -40,11 +32,10 @@ const ReviewForm = ({ placeId, userId, onClose }) => {
       console.log("Review added:", response.data);
       setMessage("Review submitted successfully!");
 
-      // Call the parent's review submit callback with placeId
       onReviewSubmit(placeId);
 
       setTimeout(() => {
-        onClose(); // Close the modal after a brief delay
+        onClose();
       }, 2000);
     } catch (error) {
       setMessage(
@@ -58,24 +49,23 @@ const ReviewForm = ({ placeId, userId, onClose }) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">
+    <div className="max-w-lg w-full mx-auto p-4 md:p-6 bg-white rounded-lg shadow-lg">
+      <h2 className="text-xl md:text-2xl font-semibold mb-4 text-center text-gray-800">
         Leave a Review
       </h2>
       <form onSubmit={handleSubmit}>
+        
         {/* Rating Section */}
         <div className="mb-6">
           <label className="block text-lg font-medium text-gray-700 mb-2">
             Rating:
           </label>
-          <div className="flex space-x-1">
+          <div className="flex space-x-1 justify-center md:justify-start">
             {[1, 2, 3, 4, 5].map((star) => (
               <FaStar
                 key={star}
-                className={`cursor-pointer text-3xl ${
-                  star <= (hover || rating)
-                    ? "text-yellow-500"
-                    : "text-gray-300"
+                className={`cursor-pointer text-2xl md:text-3xl ${
+                  star <= (hover || rating) ? "text-yellow-500" : "text-gray-300"
                 }`}
                 onClick={() => setRating(star)}
                 onMouseEnter={() => setHover(star)}
@@ -108,7 +98,7 @@ const ReviewForm = ({ placeId, userId, onClose }) => {
         <div className="text-center">
           <button
             type="submit"
-            className={`px-6 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+            className={`w-full md:w-auto px-6 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             disabled={loading}
